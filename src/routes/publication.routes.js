@@ -14,6 +14,19 @@ router.get ("/:id",async function(req,res){
     }
 })
 
+router.get ("/getPublicationsByUser/:user",async function(req,res){
+    try{
+        const autor = req.params.user
+        const publications = await Publication.find({autor})
+        res.json(publications)
+    }catch(error){
+        res.json({
+            error:true,
+            message:error.message
+        })
+    }
+})
+
 router.post("/",async function(req,res){
     try{
         const publication = req.body

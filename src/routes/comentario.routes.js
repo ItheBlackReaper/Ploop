@@ -14,6 +14,19 @@ router.get ("/:id",async function(req,res){
     }
 })
 
+router.get ("/getComentariosByPublication/:publication",async function(req,res){
+    try{
+        const publicacao = req.params.publication
+        const comentarios = await Comentario.find({publicacao})
+        res.json(comentarios)
+    }catch(error){
+        res.json({
+            error:true,
+            message:error.message
+        })
+    }
+})
+
 router.post("/",async function(req,res){
     try{
         const comentario = req.body

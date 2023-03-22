@@ -6,6 +6,7 @@ const comentario = new Schema({
     conteudo:String,
     respostas:Array,
     curtidas:Array,
+    publicacao:String,
 })
 
 module.exports = mongoose.model("Comentario",comentario)

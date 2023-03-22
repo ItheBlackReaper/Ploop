@@ -17,8 +17,19 @@ router.get ("/:id",async function(req,res){
 router.post("/",async function(req,res){
     try{
         const usuario = req.body
-        const usuarioSalvo = await User(usuario).save()
-        res.json(usuarioSalvo)
+        const [isExist] = await User.find({
+            email:usuario.email
+        })
+        if(isExist){
+            res.json({
+                error:true,
+                message:"E-mail já cadastrado."
+            })
+        }else{
+            const usuarioSalvo = await User(usuario).save()
+            res.json(usuarioSalvo)
+        }
+        
     }catch(error){
         res.json({
             error:true,
