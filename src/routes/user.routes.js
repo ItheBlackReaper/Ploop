@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const User = require("../models/user")
+const bcrypt = require("bcrypt")
 
 router.get ("/:id",async function(req,res){
     try{
@@ -26,6 +27,8 @@ router.post("/",async function(req,res){
                 message:"E-mail já cadastrado."
             })
         }else{
+            const salt = bcrypt.genSaltSync(10)
+            usuario.senha = bcrypt.hashSync(usuario.senha,salt)
             const usuarioSalvo = await User(usuario).save()
             res.json(usuarioSalvo)
         }
